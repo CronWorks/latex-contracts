@@ -1,0 +1,11 @@
+Package: latex-contracts
+Version: 1.93
+Section: cws
+Priority: optional
+Architecture: all
+Essential: no
+Depends: python-jinja2, latex-python
+Installed-Size: 1
+Maintainer: Luke Scott [luke at cronworks dot net]
+Provides: latex-contracts
+Description: [cws] the python-enriched LaTeX environment for generating contracts
