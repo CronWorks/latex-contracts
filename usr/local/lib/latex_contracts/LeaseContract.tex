@@ -118,19 +118,20 @@
         
         \clause[Security Deposit]{%
             [[[ if contract.renewal ]]]%
-                A Security Deposit has already been collected in the amount of
+                A combined Security Deposit and move-in fee has already been collected in the amount of
                 \highlight{((( contract.property.deposit|escapeTex )))} as part of the Agreement for which
                 this is a Renewal.
             [[[else]]]%
                 To confirm this Agreement, Tenant will make a payment to Lessor
-                in the amount of \highlight{((( contract.property.deposit|escapeTex )))} as a Security Deposit within 
+                in the amount of \highlight{((( contract.property.deposit|escapeTex )))} as a combined
+                Security Deposit and move-in fee within 
                 \highlight{((( contract.administrativeGracePeriodDays )))} days of the Lease Agreement
                 Date.
             [[[endif]]]%
-            Of this Deposit,
+            Of this amount,
             \highlight{((( contract.property.depositNonRefundable|escapeTex )))} is a
-            non-refundable move-in fee.
-            The remaining portion is security for performance of Tenant's obligations as described in this
+            non-refundable move-in fee, and the
+            remaining portion is a security for performance of Tenant's obligations as described in this
             Agreement, including but not limited to payment of rent and cleaning of the Property for which
             Tenant is responsible, and to indemnify Lessor for damage to the Property. If any such damage
             occurs beyond the refundable portion, then the Tenant will be responsible for the difference.
