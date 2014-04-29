@@ -14,7 +14,7 @@
 \LoadClass[10pt,letterpaper]{article}
 
 % why does hyperref cause the bad pagination/margin screwups?
-\usepackage[hidelinks]{hyperref}% form fields, hyperlinks for \ref{}
+%\usepackage[hidelinks]{hyperref}% form fields, hyperlinks for \ref{}
 
 \usepackage[hang,flushmargin]{footmisc} % Align the footnote number better
 \usepackage[letterpaper]{geometry}
@@ -114,9 +114,9 @@
 
 % Create a clause. A clause is the most common paragraph-style element, identifying each of the main
 % terms of the agreement. 
-% TODO not written yet: Overridden clauses are accommodated by generating if/then blocks for each
-% overridden clause label; if a clause is requested which matches a custom clause, then
-% it is replaced by the custom content.
+% TODO: in python code, *all* clauses should be first created in an ordered dict,
+%       so that custom clauses override any previously defined default ones.
+%       then, during execution, this dict is walked through to generate \clause{}{} commands.
 \newcommand{\clause}[2][]{%
     \par
     \begin{clauseLine}%
@@ -154,7 +154,7 @@
         \hspace{\formLabelSpacing}%
         \rlap{\smash{\raisebox{3pt}{#1}}}% pre-filled content to put on the line
         \parbox[t]{\formUnderlineWidth}{%
-	        \rlap{\TextField[align=1,borderwidth=0,width=0.9\formUnderlineWidth]{}}% the fillable box, with no label (TODO)
+	        \rlap{\TextField[align=1,borderwidth=0,width=0.9\formUnderlineWidth]{{#1}}}% the fillable box, with no label (TODO)
         	\hrulefill% underline
     	}
     \end{clauseLine}%
@@ -206,7 +206,7 @@
         % multiple pages - show initials boxes and "page x of y"
         [[[if contract.showInitialsBox]]]
             \newgeometry{
-                bmargin=((( contract.getNumberOfFooterRows() + 1 )))cm
+                bmargin=((( (contract.getNumberOfFooterRows() + 1)/2 )))cm
             }
         [[[else]]]
             \newgeometry{
@@ -236,10 +236,10 @@
         \textbf{(((contract.subtitle)))}%
     \end{center}
     \rule{\linewidth}{0.3mm}
-    \begin{Form}
+   % \begin{Form}
 }
 
 \AtEndDocument{
-    \end{Form}
+   % \end{Form}
 }
 

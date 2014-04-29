@@ -20,6 +20,7 @@
 from latex_python.JinjaBase import Date, JinjaTexDocument, JsonSerializable, escapeTex
 from os import symlink, unlink
 from os.path import dirname
+from collections import OrderedDict
 
 class Contract(JinjaTexDocument):
     def __init__(self, searchPath=None, signatureFilePath=None, **kwargs):
@@ -32,7 +33,7 @@ class Contract(JinjaTexDocument):
         self.agreementDate = Date()
         self.showInitialsBox = True
         self.signSections = []
-        self.customClauses = {}  # format: {'sectionName': [clause list], ...}
+        self.clauses = {}  # format: {'sectionName': [clause list], ...}
         self.title = 'Contract Agreement'
         self.subtitle = "This document is a Contractual Agreement (``Agreement'') between the parties listed."
 
@@ -74,14 +75,14 @@ class Contract(JinjaTexDocument):
             # file doesn't exist
             pass
 
-    def addCustomClause(self, sectionName, clause):
-        if not sectionName in self.customClauses:
-            self.customClauses[sectionName] = []
-        self.customClauses[sectionName].append(clause)
+    def addClause(self, sectionName, clause):
+        if not sectionName in self.clauses:
+            self.clauses[sectionName] = OrderedDict()
+        self.clauses[sectionName][clause.label] = clause
 
     def getCustomClauses(self, sectionName):
         try:
-            result = '\n'.join(clause.__str__() for clause in self.customClauses[sectionName])
+            result = '\n'.join(clause.__str__() for clause in self.clauses[sectionName].values())
             return result
         except:
             return ''

@@ -53,9 +53,11 @@ ELEMENT_LABELS = {'appliances': 'Appliances',
                   }
 
 class SubjectToInspection(JsonSerializable):
-    _inspectionItems = []  # items to attach to the room (subclass as appropriate)
-    _moveInConditions = {}
-    _moveOutConditions = {}
+    def __init__(self, **kwargs):
+        self._inspectionItems = []  # items to attach to the room (subclass as appropriate)
+        self._moveInConditions = {}
+        self._moveOutConditions = {}
+        super(SubjectToInspection, self).__init__(**kwargs)
 
     def setCondition(self, itemId, moveInOrOut, condition):
         conditionDict = self.__dict__['_%sConditions' % moveInOrOut]
@@ -75,13 +77,15 @@ class Room(SubjectToInspection):
     def __init__(self, label=None, **kwargs):
         if label != None:
             kwargs['label'] = label  # shortcut for instantiation syntax
+        else:
+            kwargs['label'] = str(type(self))
         super(Room, self).__init__(**kwargs)
 
     def __str__(self):
         return '%s %s' % (self.label, self.__class__.__name__.strip())
 
 class Kitchen(Room):
-    inspectionItems = ['cleanliness',
+    _inspectionItems = ['cleanliness',
                        'countertops',
                        'cupboards',
                        'electrical',
@@ -116,7 +120,7 @@ class Property(SubjectToInspection):
                         'heatingOil']
 
     def __init__(self, **kwargs):
-        self.customClauses = {}  # format: {'sectionName': [clause list], ...}
+        self.clauses = {}  # format: {'sectionName': [clause list], ...}
         self.applicationFee = Money(35)
         self.depositNonRefundable = Money(250)
         self.furnished = False
@@ -178,8 +182,9 @@ class LeaseContract(Contract):
         return result
 
     def generate(self, outputFilename, system, variables={}):
-        for sectionName in self.property.customClauses:
-            for clause in self.property.customClauses[sectionName]:
-                self.addCustomClause(sectionName, clause)
+        # override default clauses with property's custom clauses
+        for sectionName in self.property.clauses:
+            for clause in self.property.clauses[sectionName]:
+                self.addClause(sectionName, clause)
         super(LeaseContract, self).generate(outputFilename, system, variables)
 
