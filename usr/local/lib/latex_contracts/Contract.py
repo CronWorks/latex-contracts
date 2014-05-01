@@ -75,7 +75,11 @@ class Contract(JinjaTexDocument):
             # file doesn't exist
             pass
 
-    def addClause(self, sectionName, clause):
+    def addClause(self, sectionName, labelOrClauseObject, textOrNone = None):
+        if isinstance(labelOrClauseObject, Clause):
+            clause = labelOrClauseObject
+        else:
+            clause = Clause(label=labelOrClauseObject, text=textOrNone)
         if not sectionName in self.clauses:
             self.clauses[sectionName] = OrderedDict()
         self.clauses[sectionName][clause.label] = clause
