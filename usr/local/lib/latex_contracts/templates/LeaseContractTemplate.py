@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright 2012, 2013 J. Luke Scott
+# Copyright 2012, 2013, 2014 J. Luke Scott
 # This file is part of latex-contracts.
 
 # latex-contracts is free software: you can redistribute it and/or modify

@@ -1,6 +1,6 @@
 # /usr/bin/env python
 
-# Copyright 2012, 2013 J. Luke Scott
+# Copyright 2012, 2013, 2014 J. Luke Scott
 # This file is part of latex-contracts.
 
 # latex-contracts is free software: you can redistribute it and/or modify
@@ -53,18 +53,18 @@ ELEMENT_LABELS = {'appliances': 'Appliances',
                   }
 
 class SubjectToInspection(JsonSerializable):
-    def __init__(self, **kwargs):
-        self._inspectionItems = []  # items to attach to the room (subclass as appropriate)
-        self._moveInConditions = {}
-        self._moveOutConditions = {}
-        super(SubjectToInspection, self).__init__(**kwargs)
+    _inspectionItems = []  # items to attach to the room (subclass as appropriate)
+    _moveInConditions = {}
+    _moveOutConditions = {}
 
     def setCondition(self, itemId, moveInOrOut, condition):
-        conditionDict = self.__dict__['_%sConditions' % moveInOrOut]
+        conditionDict = getattr(self, '_%sConditions' % moveInOrOut, {})
+        if not conditionDict:
+            setattr(self, '_%sConditions' % moveInOrOut, conditionDict)
         conditionDict[itemId] = condition
 
     def getConditionsTuples(self, moveInOrOut):
-        conditionDict = self.__dict__['_%sConditions' % moveInOrOut]
+        conditionDict = getattr(self, '_%sConditions' % moveInOrOut, {})
         resultDict = {}
         for itemId in sorted(self._inspectionItems):
             label = ELEMENT_LABELS[itemId]
@@ -78,7 +78,7 @@ class Room(SubjectToInspection):
         if label != None:
             kwargs['label'] = label  # shortcut for instantiation syntax
         else:
-            kwargs['label'] = str(type(self))
+            kwargs['label'] = ''
         super(Room, self).__init__(**kwargs)
 
     def __str__(self):
@@ -86,10 +86,10 @@ class Room(SubjectToInspection):
 
 class Kitchen(Room):
     _inspectionItems = ['cleanliness',
-                       'countertops',
-                       'cupboards',
-                       'electrical',
-                       'walls']
+                        'countertops',
+                        'cupboards',
+                        'electrical',
+                        'walls']
 
 class Bedroom(Room):
     _inspectionItems = ['cleanliness',
@@ -170,14 +170,14 @@ class LeaseContract(Contract):
         # \newcommand{\getInspectionFormContent}[1]{% format: \getInspectionFormContent{moveIn or moveOut}
         result = []
         for room in self.property.rooms:
-            result += self.getInspectionContent(str(room), moveInOrOut)
+            result += self.getInspectionContent(str(room), room, moveInOrOut)
 
-        result += self.getInspectionContent('General', moveInOrOut)
+        result += self.getInspectionContent('General', self.property, moveInOrOut)
         return '\n'.join(result)
 
-    def getInspectionContent(self, label, moveInOrOut):
+    def getInspectionContent(self, label, thingToInspect, moveInOrOut):
         result = ['\\subsection{%s}' % label]
-        for (label, condition) in self.property.getConditionsTuples(moveInOrOut):
+        for (label, condition) in thingToInspect.getConditionsTuples(moveInOrOut):
             result.append('\\formLine[%s]{%s}' % (condition, label))
         return result
 
