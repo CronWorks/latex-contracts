@@ -155,8 +155,12 @@ class Clause(JsonSerializable):
         super(Clause, self).__init__(**kwargs)
 
     def __str__(self, *args, **kwargs):
-        result = '\\clause[%s]{%s}' % (self.label, self.text)
+        result = '\\clause[%s]{%s}' % (self.label, self.text.strip())
         return result
+
+class Definition(JsonSerializable):
+    # TODO
+    pass
 
 class Person(JsonSerializable):
     _required = ['name',
