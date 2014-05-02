@@ -84,7 +84,7 @@ class Contract(JinjaTexDocument):
             self.clauses[sectionName] = OrderedDict()
         self.clauses[sectionName][clause.label] = clause
 
-    def getCustomClauses(self, sectionName):
+    def getClauses(self, sectionName):
         try:
             result = '\n'.join(clause.__str__() for clause in self.clauses[sectionName].values())
             return result
@@ -189,3 +189,20 @@ class Person(JsonSerializable):
 
     def __str__(self, *args, **kwargs):
         return self.name
+
+def buildContract(typeOrInstance, **kwargs):
+    if isinstance(typeOrInstance, Contract):
+        contract = typeOrInstance
+    else:
+        contract = typeOrInstance(**kwargs)
+    
+    # shorthand state & functions for building clauses/definitions    
+    currentSection = None
+    def section(label):
+        currentSection = label
+    def definition(term, meaning):
+        contract.addDefinition(currentSection, term, meaning)
+    def clause(heading, text):
+        contract.addClause(currentSection, heading, text)
+    
+    return (contract, section, definition, clause)
