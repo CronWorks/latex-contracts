@@ -205,7 +205,7 @@
         % multiple pages - show initials boxes and "page x of y"
         [[[if contract.showInitialsBox]]]
             \newgeometry{
-                bmargin=5cm
+                bmargin=((( contract.getNumberOfFooterRows() + 1 )))cm
             }
         [[[else]]]
             \newgeometry{
