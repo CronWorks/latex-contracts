@@ -33,7 +33,7 @@ class Contract(JinjaTexDocument):
         self.agreementDate = Date()
         self.showInitialsBox = True
         self.signSections = []
-        self.clauses = {}  # format: {'sectionName': [clause list], ...}
+        self.clauses = OrderedDict() # format: {'sectionName': [clause list], ...}
         self.title = 'Contract Agreement'
         self.subtitle = "This document is a Contractual Agreement (``Agreement'') between the parties listed."
 
