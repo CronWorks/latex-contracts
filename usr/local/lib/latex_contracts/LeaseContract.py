@@ -31,8 +31,7 @@ class Tenant(Person):
         super(Tenant, self).__init__(**kwargs)
 
 class Occupant(Person):
-    # remove default required fields from Person
-    _required = ['name']
+    pass # _required & __init__ are the same
 
 ELEMENT_LABELS = {'appliances': 'Appliances',
                   'cleanliness':'General Cleanliness',

@@ -1,0 +1,131 @@
+\begin{document}
+    Please provide all of the information requested below. Incomplete information can delay the
+    processing of your application. \textbf{Please print clearly.}
+    
+    It is also helpful to authorize employees, bank, and landlords to release all relevant information
+    to \highlight{((( contract.agencyShortName )))} prior to submitting this application.
+    
+    \section{Occupant Information}
+        \formLine[((( contract.applicant.name )))]{Name}
+        \formLine{Social Security Number}
+        \formLine{Driver's License Number}
+        \formLine{Date of Birth}
+        \formLine[((( contract.applicant.phone )))]{Home Phone}
+        \formLine{Work Phone (optional)}
+        \formLine[((( contract.applicant.email )))]{Email}
+    
+    \section{Employment History}
+        \formLine{Current Employer}
+        \formLine{Address}
+        \formLine{City, State, Zip}
+        \formLine{Phone}
+        \formLine{Supervisor}
+        \formLine{Position}
+        \formLine{How Long}
+        \formLine{Salary}
+        
+    \section{Rental History}
+    \sectionintro{Please provide at least two years of information.}
+        \subsection{Present Address}
+            \formLine[((( contract.applicant.address )))]{Address}
+            \formLine{Did you rent or own?}
+            \formLine{Amount paid monthly}
+            \formLine{Reason for leaving}
+            \formLine{Landlord or Mortgage Company Name}
+            \formLine{Phone}
+    
+        \subsection{Previous Address}
+            \formLine{Address}
+            \formLine{Did you rent or own?}
+            \formLine{Amount paid monthly}
+            \formLine{Reason for leaving}
+            \formLine{Landlord or Mortgage Company Name}
+            \formLine{Phone}
+    
+    \section{Banking Reference}
+        \formLine{Name}
+        \formLine{Phone}
+        \formLine{Address}
+        \formLine{Account Number}
+        \formLine{Checking or Savings?}
+        \formLine{Balance}
+    
+    \section{Personal References}
+        \subsection{Reference 1}
+        \formLine{Name}
+        \formLine{Address}
+        \formLine{City, State, Zip}
+        \formLine{Relationship}
+        \formLine{Phone}
+    
+        \subsection{Reference 2}
+        \formLine{Name}
+        \formLine{Address}
+        \formLine{City, State, Zip}
+        \formLine{Relationship}
+        \formLine{Phone}
+    
+        
+    \section{Other Information}
+        \formLine{Pets (describe)}
+        \formLine{Water-filled furniture (describe)}
+        \formLine{Vehicles/boats to be parked on premises (make/model/year/license no.)}
+        \formLine{In the past, have you been delinquent in paying rent or other financial obligations?}
+        ((( contract.formLineMulti(2,'If yes, please explain') )))
+        \formLine{In the past, have you failed to perform any obligations of a rental agreement or have you been a defendant in an eviction lawsuit?}
+        ((( contract.formLineMulti(2,'If yes, please explain') )))
+    
+    %\pagebreak
+    \section{Agreement and Authorization}
+        \subsection{Consumer Report Disclosure}
+            \clause[Eligibility]{The following items will be considered to determine
+                eligibility for residency:
+                \begin{itemize}
+                    \item Social Security Number validation, including verification of matching birth date
+                    \item Previous or alternate names
+                    \item Previous addresses
+                    \item Criminal records, including county, state, OFAC/Patriot Act, and Sex Offender Registry
+                    \item Civil records, including bankruptcies, liens, judgments, and evictions
+                    \item Verification of current employment
+                    \item Verification of previous rental history or reference
+                    \item Satisfactory level of credit worthiness based on your credit report and FICO score
+                \end{itemize}
+            }
+            \clause[Derogatory Information]{Derogatory information found while researching any of these items 
+                may result in denial of your application, or the requirement of an increased deposit, qualified
+                guarantor, last month’s rent, increased monthly rent, and/or other measures to secure your
+                residency.}
+            \clause[((( contract.agencyShortName )))]{
+                To investigate your background and/or credit, a Consumer Report will be obtained from:
+                \begin{center}
+                    ((( contract.agencyContactInformation )))
+                \end{center}
+            }
+            \clause[Applicant's Rights]{The Consumer Reporting Agency's role is to provide us with 
+                character background related information about you. Therefore, they will be unable to 
+                supply the reasons why you may be denied residency. Should you be denied or required to
+                additionally secure your residency, you have the right to request a copy of your consumer
+                report free of charge, within sixty (60) days from the date you receive an Adverse Action
+                Notice. You also have the right to dispute the accuracy or completeness of any item on
+                your consumer report by contacting the Consumer Reporting Agency using the information
+                displayed above.}
+    
+        \subsection{Signature}
+            \clause{I hereby acknowledge that the information on this application is true and
+                correct to the best of my knowledge. I understand all terms in this application, and 
+                I authorize \highlight{((( contract.lessorNames )))} to
+                verify the above information and obtain consumer or investigative credit report, criminal 
+                background report, and/or eviction records from ((( contract.agencyShortName ))). 
+                I understand that the \highlight{((( contract.applicationFee|escapeTex )))} 
+                fee for verifying this rental application is not a deposit, will not be applied to any rent, 
+                or refunded even if the application to rent is declined.}
+
+    ((( contract.getSignatureFormlines() )))
+    
+    \section{For Office Use Only}
+        ((( contract.formLineMulti(3,'Remarks') )))
+        \formLine{Move in date}
+        \formLine{Unit}
+        \formLine{Unit Type}
+        \formLine{Rent}
+\end{document}

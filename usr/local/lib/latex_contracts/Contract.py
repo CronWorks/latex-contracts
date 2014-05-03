@@ -23,19 +23,21 @@ from os.path import dirname
 from collections import OrderedDict
 
 class Contract(JinjaTexDocument):
+    
+    # defaults
+    title = 'Contract Agreement'
+    subtitle = "This document is a Contractual Agreement (``Agreement'') between the parties listed."
+    agreementDate = Date()
+    showInitialsBox = True
+    signSections = []
+    clauses = OrderedDict() # format: {'sectionName': [clause list], ...}
+
     def __init__(self, searchPath=None, signatureFilePath=None, **kwargs):
         if searchPath == None:
             searchPath = dirname(__file__)
         if signatureFilePath == None:
             signatureFilePath = dirname(__file__)
         self.signatureFilePath = signatureFilePath
-
-        self.agreementDate = Date()
-        self.showInitialsBox = True
-        self.signSections = []
-        self.clauses = OrderedDict() # format: {'sectionName': [clause list], ...}
-        self.title = 'Contract Agreement'
-        self.subtitle = "This document is a Contractual Agreement (``Agreement'') between the parties listed."
 
         super(Contract, self).__init__(searchPath, **kwargs)
 
@@ -163,10 +165,7 @@ class Definition(JsonSerializable):
     pass
 
 class Person(JsonSerializable):
-    _required = ['name',
-                 'address',
-                 'phone',
-                 'email']
+    _required = ['name']
 
     def __init__(self, **kwargs):
         # the filename of BOTH the signature AND the getInitialsFooterLines.
@@ -190,6 +189,13 @@ class Person(JsonSerializable):
         result = 'signatures/%s' % self.signatureFilename
         return result
 
+    def getCityStateZip(self):
+        result = []
+        for field in ['city', 'state', 'zip']:
+            attr = getattr(self, field)
+            if attr:
+                result.append(attr)
+        return ', '.join(result)
 
     def __str__(self, *args, **kwargs):
         return self.name

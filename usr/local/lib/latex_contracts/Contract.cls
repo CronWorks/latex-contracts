@@ -203,25 +203,25 @@
 \AtBeginDocument{
     \ifthenelse{\pageref{LastPage}>1}{
         % multiple pages - show initials boxes and "page x of y"
-        [[[if contract.showInitialsBox]]]
+        [[[ if contract.showInitialsBox ]]]
             \newgeometry{
                 bmargin=((( contract.getNumberOfFooterRows() + 1 )))cm
             }
-        [[[else]]]
+        [[[ else ]]]
             \newgeometry{
                 bmargin=3cm
             }
             \setlength{\footskip}{30pt}
-        [[[endif]]]
+        [[[ endif ]]]
 
         \renewcommand{\@oddfoot}{
             \parbox[b]{\textwidth}{
                 \centering %
-                [[[if contract.showInitialsBox]]]%
+                [[[ if contract.showInitialsBox ]]]%
                 Initials:\\
                     \vspace{7pt}
                     \getInitialsBox% this will have to be created in the calling document/class
-                [[[endif]]]
+                [[[ endif ]]]
                 
                 \thepage\ of \pageref{LastPage}
             } 
