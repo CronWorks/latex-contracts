@@ -80,8 +80,10 @@ def addContent(contract):
         occurs beyond the refundable portion, then the Tenant will be responsible for the difference.
         Values of damages will be based on reasonable market value of any incurred repairs, 
         replacement, or services.
-        This deposit will be held in an account at Boeing Employees Credit Union in Seattle,
-        Washington.''' % escapeTex(contract.property.depositNonRefundable))
+        This deposit will be held in an account at %s in 
+        %s.''' % (escapeTex(contract.property.depositNonRefundable),
+                  contract.depositAccountBankName,
+                  contract.depositAccountBankCityState))
         
     contract.addClause(section, 'Rent', '''
         The rent is \highlight{%s} per month,

@@ -189,10 +189,16 @@ class Person(JsonSerializable):
         result = 'signatures/%s' % self.signatureFilename
         return result
 
+    def getFullAddress(self):
+        result = '''%s\\\\
+                    %s''' % (getattr(self, 'address', ''),
+                             self.getCityStateZip())
+        return result
+
     def getCityStateZip(self):
         result = []
-        for field in ['city', 'state', 'zip']:
-            attr = getattr(self, field)
+        for field in ['city', 'state', 'zip', 'country']:
+            attr = getattr(self, field, None)
             if attr:
                 result.append(attr)
         return ', '.join(result)

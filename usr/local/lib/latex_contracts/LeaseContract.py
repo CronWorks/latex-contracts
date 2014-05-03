@@ -17,7 +17,7 @@
 # along with latex-contracts.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from latex_python.JinjaBase import JsonSerializable, Money, Percent
+from latex_python.JinjaBase import JsonSerializable, Money, Percent, escapeTex
 from Contract import Contract, Person
 
 class Lessor(Person):
@@ -150,6 +150,9 @@ class LeaseContract(Contract):
         self.latePenaltyLimitPercent = Percent(10)
         self.bouncedCheckPenalty = Money(50)
 
+        self._required += ['depositAccountBankName',
+                           'depositAccountBankCityState']
+        
         super(LeaseContract, self).__init__(searchPath, signatureFilePath, **kwargs)
 
         self.title = 'Lease/Rental Agreement'
@@ -161,6 +164,33 @@ class LeaseContract(Contract):
     def multipleTenants(self):
         return len(self.tenants) + len(self.occupants) > 1
 
+    def getLessorDefinitions(self, i):
+        return self.getPersonDefinitions('Lessor', self.lessors[i], i+1)
+    
+    def getTenantDefinitions(self, i):
+        return self.getPersonDefinitions('Tenant', self.tenants[i], i+1)
+    
+    def getOccupantDefinitions(self, i):
+        # abbreviated version
+        person = self.occupants[i]
+        label = 'Occupant'
+        result = '''
+            \definition{%s %d}{%s}
+            \definition{%s %d telephone number}{%s}
+        ''' % (label, i+1, person.name,
+               label, i+1, getattr(person, 'phone', ''))
+        return result
+    
+    def getPersonDefinitions(self, label, person, i):
+        result = '''
+            \definition{%s %d}{%s}
+            \definition{%s %d current or previous address}{%s}
+            \definition{%s %d telephone number}{%s}
+        ''' % (label, i, person.name,
+               label, i, person.getFullAddress(),
+               label, i, getattr(person, 'phone', ''))
+        return result
+    
     def getNumberOfFooterRows(self):
         numberOfInitialsRows = max(len(self.lessors), len(self.tenants))
         return 2 + numberOfInitialsRows  # 2 for "initials:" label and "page x of y"

@@ -16,12 +16,6 @@
     [[[endfor]]]%
 }
 
-\newcommand{\getTenantDefinitions}[4]{% number, name, address, phone
-    \definition{Tenant #1}{#2}
-    \definition{Tenant #1 current or previous address}{#3}
-    \definition{Tenant #1 telephone number}{#4}
-}
-
 \newcommand{\getOccupantDefinitions}[2]{% number, name
     \definition{Additional Occupant #1}{#2}%
 }
@@ -37,30 +31,20 @@
     \section{Definitions}
         \definition{Lease Agreement Date}{((( contract.agreementDate )))}
         [[[for i in range(contract.tenants.__len__())]]]
-            \getTenantDefinitions
-                {((( i+1 )))}
-                {((( contract.tenants[i]|escapeTex )))}
-                {((( contract.tenants[i].address|escapeTex )))}
-                {((( contract.tenants[i].phone|escapeTex )))}
+            ((( contract.getTenantDefinitions(i) )))
         [[[endfor]]]
         \definition{Tenant}{All tenants signing this Agreement are collectively referred to as
         ``Tenant''.}
         [[[if contract.occupants]]]
             [[[for i in range(contract.occupants.__len__())]]]
-                \getOccupantDefinitions
-                    {((( i+1 )))}
-                    {((( contract.occupants[i]|escapeTex )))}
+                ((( contract.getOccupantDefinitions(i) )))
             [[[endfor]]]
             \definition{Occupants}{Tenant and Additional Occupants named on this lease, as well as
             any additional authorized occupants (if any) under clause \ref{Authorized Occupants}, are referred to as
             ``Occupants''.} 
         [[[endif]]]
         [[[for i in range(contract.lessors.__len__())]]]
-            \getLessorDefinitions
-                {((( i+1 )))}
-                {((( contract.lessors[i]|escapeTex )))}
-                {((( contract.lessors[i].address|escapeTex )))}
-                {((( contract.lessors[i].phone|escapeTex )))}
+            ((( contract.getLessorDefinitions(i) )))
         [[[endfor]]]
         \definition{Lessor}{All lessors named on this lease are collectively referred to as
         ``Lessor''.}
