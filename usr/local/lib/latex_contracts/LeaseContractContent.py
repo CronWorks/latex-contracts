@@ -288,11 +288,6 @@ def addContent(contract):
         smoke detector(s) can result in punishment including a fine pursuant to
         RCW 43.44.110.''' % smokeDetectorText)
         
-    contract.addClause(section, 'Screens', '''
-        Lessor is not obligated to provide window and/or door screens. If there are any
-        installed as of Occupation Date, Lessor has no obligation to maintain or replace them.''')
-    
-    
     ############################################################################################
     section = 'Rules'
     ############################################################################################
@@ -308,7 +303,7 @@ def addContent(contract):
         Tenant shall not use the Property for any illegal purposes.''')
     
     contract.addClause(section, 'Repairs', '''
-        Tenant shall promptly repair, at Tenant's expense, any broken glass in doors or
+        Tenant shall promptly repair, at Tenant's expense, any damaged glass or screens in doors or
         windows, as well as any broken light bulbs or other items which by their design require periodic
         replacement.''')
     

@@ -23,23 +23,17 @@ from os.path import dirname
 from collections import OrderedDict
 
 class Contract(JinjaTexDocument):
-    
-    # defaults
-    title = 'Contract Agreement'
-    subtitle = "This document is a Contractual Agreement (``Agreement'') between the parties listed."
-    agreementDate = Date()
-    showInitialsBox = True
-    signSections = []
-    clauses = OrderedDict() # format: {'sectionName': [clause list], ...}
-
     def __init__(self, searchPath=None, signatureFilePath=None, **kwargs):
-        if searchPath == None:
-            searchPath = dirname(__file__)
-        if signatureFilePath == None:
-            signatureFilePath = dirname(__file__)
-        self.signatureFilePath = signatureFilePath
-
-        super(Contract, self).__init__(searchPath, **kwargs)
+        self.title = 'Contract Agreement'
+        self.subtitle = "This document is a Contractual Agreement (``Agreement'') between the parties listed."
+        self.agreementDate = Date()
+        self.showInitialsBox = True
+        self.signSections = []
+        self.clauses = OrderedDict() # format: {'sectionName': [clause list], ...}
+    
+        super(Contract, self).__init__(searchPath or dirname(__file__), **kwargs)
+        
+        self.signatureFilePath = signatureFilePath or dirname(__file__)
 
     def generate(self, outputFilename, system, variables={}):
         variables['contract'] = self
@@ -150,11 +144,11 @@ class Contract(JinjaTexDocument):
         return result
 
 class Clause(JsonSerializable):
-    _required = ['text']
 
     def __init__(self, **kwargs):
         self.label = ''
         super(Clause, self).__init__(**kwargs)
+        self._required = ['text']
 
     def __str__(self, *args, **kwargs):
         result = '\\clause[%s]{%s}' % (self.label, self.text.strip())
@@ -165,7 +159,6 @@ class Definition(JsonSerializable):
     pass
 
 class Person(JsonSerializable):
-    _required = ['name']
 
     def __init__(self, **kwargs):
         # the filename of BOTH the signature AND the getInitialsFooterLines.
@@ -176,6 +169,8 @@ class Person(JsonSerializable):
         self.signatureFilename = None
 
         super(Person, self).__init__(**kwargs)
+
+        self._required = ['name']
 
     def getInitialsRelativePath(self):
         if not self.signatureFilename:

@@ -89,7 +89,9 @@
                 Tenant knows the location of each item.}
                 \formLineCheckbox{Water Shut-Off Valve}
                 \formLineCheckbox{Electrical Panel and Main Shutoff Switch}
-                \formLineCheckbox{Gas/Furnace Shut-Off Switch}
+                [[[ if 'gasMeter' in contract.property._inspectionItems or 'heatingOil' in contract.property._inspectionItems ]]]
+                    \formLineCheckbox{Gas/Furnace Shut-Off Switch}
+                [[[ endif ]]]
             
             \subsection{Identification}
                 [[[ for tenant in contract.tenants ]]]%

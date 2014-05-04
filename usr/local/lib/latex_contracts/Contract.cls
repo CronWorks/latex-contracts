@@ -42,6 +42,8 @@
 \clubpenalty=300
 
 % the structure of the contract itself - sections & clauses
+\renewcommand \thesection{\Roman{section}.}
+\renewcommand \thesubsection{\arabic{section}.\arabic{subsection}}
 \renewcommand{\section}{%
     \@startsection{section}{1}{0pt}{15pt}{5pt}{\centering\large\bfseries}
 }
@@ -51,7 +53,7 @@
 
 \newcommand{\sectionintro}[1]{
     \begin{center}
-        \parbox[t]{0.7\textwidth}{\centering{#1}}
+        \parbox[t]{0.7\textwidth}{\centering\textit{#1}}
     \end{center}
 }
 
