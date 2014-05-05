@@ -3,6 +3,7 @@
 from latex_contracts.Contract import Contract, Person
 from latex_python.JinjaBase import Money
 from py_base.PySystem import PySystem
+from Contract import Address
 
 class RentalApplication(Contract):
 
@@ -24,7 +25,7 @@ class RentalApplication(Contract):
         if self.applicant:
             return [self.applicant]
         return [Person(name='Applicant',
-                       address='',
+                       address=Address(),
                        phone='',
                        email='')]
 

@@ -16,17 +16,6 @@
     [[[endfor]]]%
 }
 
-\newcommand{\getOccupantDefinitions}[2]{% number, name
-    \definition{Additional Occupant #1}{#2}%
-}
-
-\newcommand{\getLessorDefinitions}[4]{% number, name, address, phone
-    \definition{Lessor #1}{#2}
-    \definition{Lessor #1 address}{#3}
-    \definition{Lessor #1 telephone number}{#4}
-}
-
-
 \begin{document}
     \section{Definitions}
         \definition{Lease Agreement Date}{((( contract.agreementDate )))}
@@ -48,7 +37,7 @@
         [[[endfor]]]
         \definition{Lessor}{All lessors named on this lease are collectively referred to as
         ``Lessor''.}
-        \definition[Property]{Property street address}{((( contract.property.address|escapeTex )))}
+        \definition[Property]{Property street address}{((( contract.property.address.getFullAddressTex() )))}
         \definition{Property county}{((( contract.property.county|escapeTex )))}
         \definition[Occupation Date]{Lease Start Date}{((( contract.leaseStartDate )))}
         [[[ if contract.monthToMonth ]]]
@@ -120,7 +109,7 @@
 
         [[[ for tenant in contract.tenants: ]]]
             \subsection{Forwarding Address for ((( tenant|escapeTex )))}
-                \formLine[((( tenant.forwardingAddress|escapeTex )))]{Street Address}
+                \formLine[((( tenant.forwardingAddress.getFullAddressTex() )))]{Street Address}
                 \formLine[((( tenant.forwardingCityStateZip|escapeTex )))]{City, State, Zip}
                 \formLine[((( tenant.forwardingPhoneNumber|escapeTex )))]{Phone Number}
         [[[ endfor ]]]

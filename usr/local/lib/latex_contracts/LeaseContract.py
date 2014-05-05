@@ -18,7 +18,7 @@
 
 
 from latex_python.JinjaBase import JsonSerializable, Money, Percent
-from Contract import Contract, Person
+from Contract import Contract, Person, Address
 from re import sub
 
 class Lessor(Person):
@@ -26,8 +26,7 @@ class Lessor(Person):
 
 class Tenant(Person):
     def __init__(self, **kwargs):
-        self.forwardingAddress = ''
-        self.forwardingCityStateZip = ''
+        self.forwardingAddress = Address()
         self.forwardingPhoneNumber = ''
         super(Tenant, self).__init__(**kwargs)
 
@@ -235,7 +234,7 @@ class LeaseContract(Contract):
             \definition{%s %d current or previous address}{%s}
             \definition{%s %d telephone number}{%s}
         ''' % (label, i, person.name,
-               label, i, person.getFullAddress(),
+               label, i, person.address.getFullAddressTex(),
                label, i, getattr(person, 'phone', ''))
         return result
     

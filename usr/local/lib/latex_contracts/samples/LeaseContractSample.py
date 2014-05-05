@@ -25,7 +25,9 @@ from latex_contracts.LeaseContract import LeaseContract, Tenant, Occupant
 
 lease = LeaseContract()
 
-lease.property = Property(address="620 Northeast Finster Avenue",
+lease.property = Property(address=Address("620 Northeast Finster Avenue",
+                                          "Norfolk",
+                                          "Virginia"),
                           county="Meyer",
                           rent=Money(1505),
                           deposit=Money(1000),
@@ -40,18 +42,27 @@ lease.property = Property(address="620 Northeast Finster Avenue",
                           )
 
 lease.lessors.append(Lessor(name="Herman S. Muller",
-                     address="4544 South Winston, Springfield, ME 12345",
+                     address=Address("4544 South Winston",
+                                     "Springfield",
+                                     "ME",
+                                     "12345"),
                      phone="+1 234 567 8900",
                      email="herman.muller@emailaddress.com",
                      signatureFilename='SignatureSample.pdf')
                      )
 
 lease.tenants.append(Tenant(name="First Tenant",
-                            address="123 Fake Street, Springfield, MO, 12345",
+                            address=Address("123 Fake Street",
+                                            "Springfield",
+                                            "MO",
+                                            "12345"),
                             phone="123 456 7890",
                             email="first.tenant@gmail.com"))
 lease.tenants.append(Tenant(name="Second Tenant",
-                            address="321 Fake Street, Springfield, MO, 54321",
+                            address=Address("321 Fake Street",
+                                            "Springfield",
+                                            "MO",
+                                            "54321"),
                             phone="098 765 4321",
                             email="second.tenant@gmail.com"))
 lease.occupants.append(Occupant(name="First Occupant"))

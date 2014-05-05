@@ -158,6 +158,31 @@ class Definition(JsonSerializable):
     # TODO
     pass
 
+class Address(JsonSerializable):
+    def __init__(self, address=None, city=None, state=None, zip=None, **kwargs):
+        kwargs['address']=address
+        kwargs['city']=city
+        if state:
+            kwargs['state'] = state
+        if zip:
+            kwargs['zip'] = zip
+        super(Address, self).__init__(**kwargs)
+        
+    def getFullAddressTex(self):
+        result = '''%s\\\\
+                    %s''' % (escapeTex(getattr(self, 'address', '')),
+                             escapeTex(self.getCityStateZip()))
+        return result
+
+    def getCityStateZip(self):
+        result = []
+        for field in ['city', 'state', 'zip', 'country']:
+            attr = getattr(self, field, None)
+            if attr:
+                result.append(attr)
+        return ', '.join(result)
+
+
 class Person(JsonSerializable):
 
     def __init__(self, **kwargs):
@@ -183,20 +208,6 @@ class Person(JsonSerializable):
             return ''
         result = 'signatures/%s' % self.signatureFilename
         return result
-
-    def getFullAddress(self):
-        result = '''%s\\\\
-                    %s''' % (getattr(self, 'address', ''),
-                             self.getCityStateZip())
-        return result
-
-    def getCityStateZip(self):
-        result = []
-        for field in ['city', 'state', 'zip', 'country']:
-            attr = getattr(self, field, None)
-            if attr:
-                result.append(attr)
-        return ', '.join(result)
 
     def __str__(self, *args, **kwargs):
         return self.name
