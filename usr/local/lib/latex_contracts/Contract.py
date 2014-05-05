@@ -115,7 +115,7 @@ class Contract(JinjaTexDocument):
             signatureDate = self.getSignatureContentIfNecessary(person,
                                                                 '\\raisebox{3pt}{%s}'
                                                                 % Date())
-            result.append('\\formLine[%s]{%s~- Signature}' % (signatureImage, escapeTex(person)))
+            result.append('\\formLine[%s]{%s~- Signature}\\nopagebreak' % (signatureImage, escapeTex(person)))
             result.append('\\formLine[%s]{%s~- Date}' % (signatureDate, escapeTex(person)))
         return '\n'.join(result)
 

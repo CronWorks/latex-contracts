@@ -243,12 +243,10 @@ class LeaseContract(Contract):
         return 2 + numberOfInitialsRows  # 2 for "initials:" label and "page x of y"
 
     def getInspectionFormContent(self, moveInOrOut):
-        # \newcommand{\getInspectionFormContent}[1]{% format: \getInspectionFormContent{moveIn or moveOut}
-        result = []
+        result = self.getInspectionContent('General', self.property, moveInOrOut)
         for room in self.property.rooms:
             result += self.getInspectionContent(str(room), room, moveInOrOut)
 
-        result += self.getInspectionContent('General', self.property, moveInOrOut)
         return '\n'.join(result)
 
     def getInspectionContent(self, label, thingToInspect, moveInOrOut):

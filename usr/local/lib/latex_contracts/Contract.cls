@@ -26,7 +26,7 @@
     rmargin=3cm
 }
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{5pt}
+\setlength{\parskip}{4pt}% also determines form spacing
 \setlength{\footskip}{90pt}
 
 \usepackage{etoolbox}% provides \csdef, \csuse, \providebool, \booltrue, \boolfalse, \ifbool
@@ -136,7 +136,7 @@
 \newcommand{\highlight}[1]{\textbf{{#1}}}
 
 \newlength{\formLabelWidth}% width of the label of the form line
-\setlength{\formLabelWidth}{0.4\clauseWidth}
+\setlength{\formLabelWidth}{0.3\clauseWidth}
 
 \newlength{\formLabelSpacing}% width between label and _______
 \setlength{\formLabelSpacing}{0.05\clauseWidth}

@@ -53,26 +53,21 @@ def addContent(contract):
             responsible for all areas of the Property, and references to ``Property'' in this Agreement
             refer to all such areas.''')
     
-    contract.addClause(section, 'Application Fees', '''
-        Any Rental Application(s) which have been submitted for Tenant must
-        be paid for by the Tenant before this Lease becomes valid. Each Rental Application costs
-        \highlight{%s}.''' % escapeTex(contract.property.applicationFee))
-        
     if contract.renewal:
         depositText = '''
             A combined Security Deposit and move-in fee has already been collected in the amount of
-            \highlight{%s} as part of the Agreement for which
+            \\highlight{%s} as part of the Agreement for which
             this is a Renewal.''' % escapeTex(contract.property.deposit)
     else:
         depositText = '''
             To confirm this Agreement, Tenant will make a payment to Lessor
-            in the amount of \highlight{%s} as a combined
+            in the amount of \\highlight{%s} as a combined
             Security Deposit and move-in fee within 
-            \highlight{%d} days of the Lease Agreement
+            \\highlight{%d} days of the Lease Agreement
             Date.''' % (escapeTex(contract.property.deposit), contract.administrativeGracePeriodDays)
     contract.addClause(section, 'Security Deposit', depositText + '''
         Of this amount,
-        \highlight{%s} is a
+        \\highlight{%s} is a
         non-refundable move-in fee, and the
         remaining portion is a security for performance of Tenant's obligations as described in this
         Agreement, including but not limited to payment of rent and cleaning of the Property for which
@@ -86,7 +81,7 @@ def addContent(contract):
                   contract.depositAccountBankCityState))
         
     contract.addClause(section, 'Rent', '''
-        The rent is \highlight{%s} per month,
+        The rent is \\highlight{%s} per month,
         payable on or before the first of each month commencing on the first month of the lease term. 
         If the Tenant moves in on a date other than the first of the month, then a pro-rated amount for
         the remaining portion of the first month plus one month's rent will be due upon occupation of the
@@ -94,21 +89,21 @@ def addContent(contract):
         
     contract.addClause(section, 'Rent Late Charge/NSF Check', '''
         If any rent is not paid on or before the due date plus a
-        \highlight{%s} day grace period, Tenant
+        \\highlight{%s} day grace period, Tenant
         agrees to pay a late charge of
-        \highlight{%s} for each day the payment
+        \\highlight{%s} for each day the payment
         is delinquent after the last day of the grace period, up to a
-        maximum of \highlight{%s} of one
+        maximum of \\highlight{%s} of one
         month's rent.
         
         Tenant agrees to pay a charge of
-        \highlight{%s} for each
+        \\highlight{%s} for each
         Non-Sufficient Funds (NSF) check given by Tenant to Lessor. Lessor
         shall have no obligation to redeposit any check returned NSF.
         Lessor may elect to terminate this Agreement for nonpayment of
         rent, including checks returned NSF. Lessor shall notify Tenant of
         late rent and NSF check charges, and charges must be paid within
-        \highlight{%d} days.
+        \\highlight{%d} days.
         ''' % (escapeTex(contract.gracePeriodDays),
                escapeTex(contract.dailyLatePenalty),
                escapeTex(contract.latePenaltyLimitPercent),
@@ -116,17 +111,13 @@ def addContent(contract):
                contract.gracePeriodDays))
     
     if contract.property.utilitiesIncluded:
-        utilitiesText = '''
+        contract.addClause(section, 'Utilities', '''
             The rent includes reasonable use of:
-            \highlight{%s}.
+            \\highlight{%s}.
             Tenant shall pay all other utilities owed when due.
-            ''' % escapeTex(', '.join(contract.property.utilitiesIncluded)) 
+            ''' % escapeTex(', '.join(contract.property.utilitiesIncluded)))
     else:
-        utilitiesText = 'No utilities are included in rent.'
-    contract.addClause(section, 'Utilities', utilitiesText + '''
-        All utilities due will be split evenly among residents,
-        or as otherwise mutually agreed upon and
-        documented. The Lessor is not responsible for such agreement or its enforcement.''')
+        contract.addClause(section, 'Utilities', 'No utilities are included in rent.')
     
     if contract.renewal:
         inspectionText = '''
@@ -135,31 +126,31 @@ def addContent(contract):
     else:
         inspectionText = '''
             Before moving in, the move-in inspection 
-            agreement included in this Agreement (section \ref{moveInInspection})
+            agreement included in this Agreement (section \\ref{moveInInspection})
             will be filled out by Lessor and
             Tenant, and initialed on the bottom of each page. Spaces left blank indicate items
             in good condition and general cleanliness. Each party's initials indicate acknowledgement
             that the state of the property is as documented, and binds each initialed 
             page to this Agreement by the terms
             stated here. 
-            Within \highlight{%d} days of occupation of the Property, 
+            Within \\highlight{%d} days of occupation of the Property, 
             if any item differs noticeably from its condition
-            as documented in section \ref{moveInInspection}, Tenant will notify Lessor and
-            section \ref{moveInInspection} will be modified and re-initialed as appropriate.
+            as documented in section \\ref{moveInInspection}, Tenant will notify Lessor and
+            section \\ref{moveInInspection} will be modified and re-initialed as appropriate.
             ''' % contract.administrativeGracePeriodDays
     contract.addClause(section, 'Inspection Agreements', inspectionText + '''
         Upon vacation or abandonment of Property, Lessor and Tenant will fill out
-        the move-out inspection (section \ref{moveOutInspection}). Spaces left blank indicate items
+        the move-out inspection (section \\ref{moveOutInspection}). Spaces left blank indicate items
         in good condition and general cleanliness.
         Any items that differ from their move-in state beyond normal wear and tear shall be
         considered damaged and the value of damages withheld from the Security Deposit
-        (clause \ref{Security Deposit}).
+        (clause \\ref{Security Deposit}).
     
-        Within \highlight{%d} days of the Tenant's move-out date,
+        Within \\highlight{%d} days of the Tenant's move-out date,
         Lessor will give Tenant a statement of
         the basis of retaining any of the Deposit, and the remaining balance between the Lessor and Tenant
         will be paid by a method mutually agreed upon between them within 
-        \highlight{%d} days of the move-out date.
+        \\highlight{%d} days of the move-out date.
         ''' % (contract.administrativeGracePeriodDays,
                # (administrativeGracePeriodDays * 2) gives 1 period for agreement and 1 period for payment
                contract.administrativeGracePeriodDays * 2,
@@ -167,12 +158,12 @@ def addContent(contract):
             
     if not contract.renewal:
         contract.addClause(section, 'Possession', '''
-            Tenant may take possession of the property starting at \highlight{%s}
+            Tenant may take possession of the property starting at \\highlight{%s}
             on the Occupation Date. Before taking possession, Tenant must have paid the first Rent payment
-            as defined in clause \ref{Rent}, and the payment transaction must be cleared for withdrawal 
+            as defined in clause \\ref{Rent}, and the payment transaction must be cleared for withdrawal 
             by the Lessor's bank.
             In the event Tenant fails to take possession of the Property within
-            \highlight{%d} days of the Occupation Date, Tenant will forfeit the 
+            \\highlight{%d} days of the Occupation Date, Tenant will forfeit the 
             Security Deposit and this Agreement will become void. If, through no fault of Lessor, Lessor
             cannot deliver possession of the Property to Tenant on the Occupation Date, Lessor shall
             not be liable to Tenant for damages. In this case, rent charges will accrue starting on the date
@@ -189,7 +180,7 @@ def addContent(contract):
             The property is being rented as a private residence only for the Tenant and
             Additional Occupants listed in this Agreement, plus any additional occupant(s) chosen at
             the discretion of the Tenant up to a maximum of 
-            \highlight{%d} total occupants.''' % contract.property.occupantLimit
+            \\highlight{%d} total occupants.''' % contract.property.occupantLimit
     contract.addClause(section, 'Authorized Occupants', occupantsText + '''
         The Tenant shall not assign this Agreement,
         sublet all or any portion of the Property, nor give accommodation to any other roomers or
@@ -199,10 +190,10 @@ def addContent(contract):
     
     if contract.property.furnished:
         furnitureText = '''
-            The property is being rented as a \textbf{Furnished} residence, and it is the tenant's
+            The property is being rented as a \\textbf{Furnished} residence, and it is the tenant's
             responsibility to protect the included furniture against abnormal wear and tear.'''
     else:
-        furnitureText = 'The property is being rented as an \textbf{Unfurnished} residence.'
+        furnitureText = 'The property is being rented as an \\textbf{Unfurnished} residence.'
     contract.addClause(section, 'Furniture', furnitureText + '''
         It is the tenant's responsibility to protect the walls and floors from damage when moving
         furniture.''')
@@ -236,15 +227,15 @@ def addContent(contract):
     if contract.monthToMonth:
         terminationText = '''
             This is a month-to-month lease, and the Termination Date (section 
-            \ref{terminationSignatures}) is used to indicate
+            \\ref{terminationSignatures}) is used to indicate
             the move-out date. Tenant must give 20 days' notice to Lessor when moving out.'''
     else:
         terminationText = '''
             This is a fixed-length lease, and the Termination Date is defined by the
-            Lease End Date (definition \ref{Lease End Date}).'''
+            Lease End Date (definition \\ref{Lease End Date}).'''
     contract.addClause(section, 'Termination', terminationText + '''    
         If not signing another subsequent lease for the same property,
-        Tenant is instructed to move out by \highlight{%s} on the 
+        Tenant is instructed to move out by \\highlight{%s} on the 
         Termination Date at the latest. Upon termination of this Agreement, 
         any remaining financial obligations of
         Lessor or Tenant as defined by the Agreement remain intact and payable.
@@ -276,7 +267,7 @@ def addContent(contract):
     else:
         smokeDetectorText = '''
             The detector(s) will be tested during the
-            Move-In Inspection (section \ref{moveInInspection}), and any non-operational detectors will
+            Move-In Inspection (section \\ref{moveInInspection}), and any non-operational detectors will
             be repaired or replaced.'''
     contract.addClause(section, 'Smoke Detector', '''
         Tenant acknowledges and Lessor certifies that the Property is equipped with
@@ -311,11 +302,11 @@ def addContent(contract):
         contract.addClause(section, 'Snow', '''
             In the event of snow, Tenant shall remove snow from any abutting sidewalks.''')
             
-    contract.addClause(section, 'Freezing', '''
-        Tenant shall protect the plumbing from freezing. As a minimum, Tenant shall
-        leave the heat on low during cold weather, and operate various plumbing fixtures occasionally to
-        keep water flowing.''')
-    
+#     contract.addClause(section, 'Freezing', '''
+#         Tenant shall protect the plumbing from freezing. As a minimum, Tenant shall
+#         leave the heat on low during cold weather, and operate various plumbing fixtures occasionally to
+#         keep water flowing.''')
+#     
     contract.addClause(section, 'Drains', '''
         Tenant shall use a hair trap in bathtub during showers to prevent clogging of
         drain. Tenant shall relieve stoppage of drains and sewers at Tenant's expense unless resulting
