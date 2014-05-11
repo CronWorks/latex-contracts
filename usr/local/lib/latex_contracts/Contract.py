@@ -183,8 +183,11 @@ class Address(JsonSerializable):
         super(Address, self).__init__(**kwargs)
 
     def getFullAddressTex(self):
+        # do it this way because self.address could be None, and we don't want 'None' to be displayed
+        address = getattr(self, 'address', None) or ''
+
         result = '''%s\\\\
-                    %s''' % (escapeTex(getattr(self, 'address', '')),
+                    %s''' % (escapeTex(address),
                              escapeTex(self.getCityStateZip()))
         return result
 
