@@ -31,7 +31,7 @@ class Tenant(Person):
         super(Tenant, self).__init__(**kwargs)
 
 class Occupant(Person):
-    pass # _required & __init__ are the same
+    pass  # _required & __init__ are the same
 
 PROPERTY_ELEMENTS = {'appliances': 'Appliances',
                      'cleanliness':'Cleanliness',
@@ -68,10 +68,12 @@ class SubjectToInspection(JsonSerializable):
             setattr(self, '_%sConditions' % moveInOrOut, conditionDict)
         conditionDict[itemId] = condition
 
-    def getConditionsTuples(self, moveInOrOut):
+    def getConditionsTuples(self, moveInOrOut, ignoreList=[]):
         conditionDict = getattr(self, '_%sConditions' % moveInOrOut, {})
         resultDict = {}
         for itemId in sorted(self._inspectionItems):
+            if itemId in ignoreList:
+                continue
             label = PROPERTY_ELEMENTS[itemId]
             condition = getattr(conditionDict, itemId, '')
             resultDict[label] = condition
@@ -97,6 +99,7 @@ class Kitchen(Room):
                                  'countertops',
                                  'cupboards',
                                  'electrical',
+                                 'furniture',
                                  'walls']
         if tileCountertops:
             i = self._inspectionItems.index('countertops')
@@ -127,6 +130,7 @@ class Bedroom(Room):
         self._inspectionItems = ['cleanliness',
                                  'closet',
                                  'electrical',
+                                 'furniture',
                                  'walls']
 
 class Bathroom(Room):
@@ -139,7 +143,7 @@ class Bathroom(Room):
                                  'toilet',
                                  'walls']
 
-class Deck(Room): # not really a room, but close enough
+class Deck(Room):  # not really a room, but close enough
     def __init__(self, label=None, **kwargs):
         super(Deck, self).__init__(**kwargs)
         self._inspectionItems = ['cleanliness',
@@ -168,7 +172,7 @@ class Property(SubjectToInspection):
                           'rent',
                           'deposit',
                           'occupantLimit']
-    
+
         # add gas/oil on a per-property basis
         self._inspectionItems = ['smokeDetectors',
                                  'electricMeter',
@@ -177,7 +181,7 @@ class Property(SubjectToInspection):
 
 
 class LeaseContract(Contract):
-    def __init__(self, searchPath=None, signatureFilePath=None, **kwargs):
+    def __init__(self, templateModule=None, searchPath=None, signatureFilePath=None, **kwargs):
         self.lessors = []
         self.occupants = []
         self.tenants = []
@@ -199,8 +203,8 @@ class LeaseContract(Contract):
 
         self.title = 'Lease/Rental Agreement'
         self.subtitle = "This document is a Lease Agreement (``Agreement'') between Lessor and Tenant for occupation of a residential property."
-        
-        super(LeaseContract, self).__init__(searchPath, signatureFilePath, **kwargs)
+
+        super(LeaseContract, self).__init__(templateModule, searchPath, signatureFilePath, **kwargs)
 
         self._required += ['depositAccountBankName',
                            'depositAccountBankCityState']
@@ -212,11 +216,11 @@ class LeaseContract(Contract):
         return len(self.tenants) + len(self.occupants) > 1
 
     def getLessorDefinitions(self, i):
-        return self.getPersonDefinitions('Lessor', self.lessors[i], i+1)
-    
+        return self.getPersonDefinitions('Lessor', self.lessors[i], i + 1)
+
     def getTenantDefinitions(self, i):
-        return self.getPersonDefinitions('Tenant', self.tenants[i], i+1)
-    
+        return self.getPersonDefinitions('Tenant', self.tenants[i], i + 1)
+
     def getOccupantDefinitions(self, i):
         # abbreviated version
         person = self.occupants[i]
@@ -224,10 +228,10 @@ class LeaseContract(Contract):
         result = '''
             \definition{%s %d}{%s}
             \definition{%s %d telephone number}{%s}
-        ''' % (label, i+1, person.name,
-               label, i+1, getattr(person, 'phone', ''))
+        ''' % (label, i + 1, person.name,
+               label, i + 1, getattr(person, 'phone', ''))
         return result
-    
+
     def getPersonDefinitions(self, label, person, i):
         result = '''
             \definition{%s %d}{%s}
@@ -237,7 +241,7 @@ class LeaseContract(Contract):
                label, i, person.address.getFullAddressTex(),
                label, i, getattr(person, 'phone', ''))
         return result
-    
+
     def getNumberOfFooterRows(self):
         numberOfInitialsRows = max(len(self.lessors), len(self.tenants))
         return 2 + numberOfInitialsRows  # 2 for "initials:" label and "page x of y"
@@ -251,12 +255,16 @@ class LeaseContract(Contract):
 
     def getInspectionContent(self, label, thingToInspect, moveInOrOut):
         result = ['\\subsection{%s}' % label]
-        for (label, condition) in thingToInspect.getConditionsTuples(moveInOrOut):
+        ignoreList = []
+        if not self.property.furnished:
+            ignoreList.append('furniture')
+        for (label, condition) in thingToInspect.getConditionsTuples(moveInOrOut, ignoreList):
             result.append('\\formLine[%s]{%s}' % (condition, label))
         return result
 
     def generate(self, outputFilename, system, variables={}):
         # override default clauses with property's custom clauses
+        # will trigger template to be added if it hasn't been already
         for sectionName in self.property.clauses:
             for clause in self.property.clauses[sectionName]:
                 self.addClause(sectionName, clause)

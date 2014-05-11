@@ -1,0 +1,383 @@
+
+            \documentclass{/home/luke/Reference/Code/Source/latex-contracts/usr/local/lib/latex_contracts/samples/LeaseContractSample.py}
+        %% Copyright (C) 2011-2013 J Luke Scott
+%% This material is subject to the LaTeX Project Public License. See
+%% http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html for the details of that
+%% license.
+
+%% This file contains Jinja template directives. Process it using 'texify'.
+
+\renewcommand{\getInitialsBoxLeft}{%
+    %
+        
+            \vspace{7pt}\small {First Tenant} 
+            \makebox[\initialsSpaceWidth]{\hrulefill}
+            \small Date 
+            \makebox[\initialsSpaceWidth]{\hrulefill}%
+        \\
+    %
+        
+            \vspace{7pt}\small {Second Tenant} 
+            \makebox[\initialsSpaceWidth]{\hrulefill}
+            \small Date 
+            \makebox[\initialsSpaceWidth]{\hrulefill}%
+        \\
+    %
+}
+\renewcommand{\getInitialsBoxRight}{%
+    %
+        
+            \vspace{7pt}\small {Herman S. Muller} \ifbool{signSection\arabic{section}}{\rlap{\hspace{0.3cm}\smash{\includegraphics[width=1.3cm]{initials/SignatureSample.pdf}}}}{}
+            \makebox[\initialsSpaceWidth]{\hrulefill}
+            \small Date \ifbool{signSection\arabic{section}}{\rlap{\raisebox{3pt}{\formatdate{10}{5}{2014}}}}{}
+            \makebox[\initialsSpaceWidth]{\hrulefill}%
+        \\
+    %
+}
+
+\begin{document}
+    \section{Definitions}
+        \definition{Lease Agreement Date}{\formatdate{30}{7}{2013}}
+        
+            
+            \definition{Tenant 1}{First Tenant}
+            \definition{Tenant 1 current or previous address}{123 Fake Street\\
+                    Springfield, MO, 12345}
+            \definition{Tenant 1 telephone number}{123 456 7890}
+        
+        
+            
+            \definition{Tenant 2}{Second Tenant}
+            \definition{Tenant 2 current or previous address}{321 Fake Street\\
+                    Springfield, NE, 54321}
+            \definition{Tenant 2 telephone number}{098 765 4321}
+        
+        
+        \definition{Tenant}{All tenants signing this Agreement are collectively referred to as
+        ``Tenant''.}
+        
+            
+                
+            \definition{Occupant 1}{First Occupant}
+            \definition{Occupant 1 telephone number}{888 767 3232}
+        
+            
+                
+            \definition{Occupant 2}{Second Occupant}
+            \definition{Occupant 2 telephone number}{777 848 6565}
+        
+            
+            \definition{Occupants}{Tenant and Additional Occupants named on this lease, as well as
+            any additional authorized occupants (if any) under clause \ref{Authorized Occupants}, are referred to as
+            ``Occupants''.} 
+        
+        
+            
+            \definition{Lessor 1}{Herman S. Muller}
+            \definition{Lessor 1 current or previous address}{4544 South Winston\\
+                    Springfield, ME, 12345}
+            \definition{Lessor 1 telephone number}{+1 234 567 8900}
+        
+        
+        \definition{Lessor}{All lessors named on this lease are collectively referred to as
+        ``Lessor''.}
+        \definition[Property]{Property street address}{620 Northeast Finster Avenue\\
+                    Norfolk, Virginia}
+        \definition{Property county}{Meyer}
+        \definition[Occupation Date]{Lease Start Date}{\formatdate{1}{3}{2013}}
+        
+            \definition{Lease End Date}{\formatdate{1}{3}{2014}}
+            \definition{Lease type}{Fixed Duration}
+        
+
+    \section{Terms of Lease Agreement}
+        \clause[Primary Tenant]{TEST: B0rKD the first clause!
+    ALSO: Please confirm that the next clause is NOT "Occupation Type"!!!}
+\clause[Security Deposit]{To confirm this Agreement, Tenant will make a payment to Lessor
+            in the amount of \highlight{\$1,000.00} as a combined
+            Security Deposit and move-in fee within 
+            \highlight{7} days of the Lease Agreement
+            Date.
+        Of this amount,
+        \highlight{\$250.00} is a
+        non-refundable move-in fee, and the
+        remaining portion is a security for performance of Tenant's obligations as described in this
+        Agreement, including but not limited to payment of rent and cleaning of the Property for which
+        Tenant is responsible, and to indemnify Lessor for damage to the Property. If any such damage
+        occurs beyond the refundable portion, then the Tenant will be responsible for the difference.
+        Values of damages will be based on reasonable market value of any incurred repairs, 
+        replacement, or services.
+        This deposit will be held in an account at World Trust Federal Bank in 
+        Springfield, NA.}
+\clause[Rent]{The rent is \highlight{\$1,505.00} per month,
+        payable on or before the first of each month commencing on the first month of the lease term. 
+        If the Tenant moves in on a date other than the first of the month, then a pro-rated amount for
+        the remaining portion of the first month plus one month's rent will be due upon occupation of the
+        Property.}
+\clause[Rent Late Charge/NSF Check]{If any rent is not paid on or before the due date plus a
+        \highlight{5} day grace period, Tenant
+        agrees to pay a late charge of
+        \highlight{\$25.00} for each day the payment
+        is delinquent after the last day of the grace period, up to a
+        maximum of \highlight{10\%} of one
+        month's rent.
+        
+        Tenant agrees to pay a charge of
+        \highlight{\$50.00} for each
+        Non-Sufficient Funds (NSF) check given by Tenant to Lessor. Lessor
+        shall have no obligation to redeposit any check returned NSF.
+        Lessor may elect to terminate this Agreement for nonpayment of
+        rent, including checks returned NSF. Lessor shall notify Tenant of
+        late rent and NSF check charges, and charges must be paid within
+        \highlight{5} days.}
+\clause[Utilities]{The rent includes reasonable use of:
+            \highlight{Water/Sewer/Garbage}.
+            Tenant shall pay all other utilities owed when due.}
+\clause[Inspection Agreements]{Before moving in, the move-in inspection 
+            agreement included in this Agreement (section \ref{moveInInspection})
+            will be filled out by Lessor and
+            Tenant, and initialed on the bottom of each page. Spaces left blank indicate items
+            in good condition and general cleanliness. Each party's initials indicate acknowledgement
+            that the state of the property is as documented, and binds each initialed 
+            page to this Agreement by the terms
+            stated here. 
+            Within \highlight{7} days of occupation of the Property, 
+            if any item differs noticeably from its condition
+            as documented in section \ref{moveInInspection}, Tenant will notify Lessor and
+            section \ref{moveInInspection} will be modified and re-initialed as appropriate.
+            
+        Upon vacation or abandonment of Property, Lessor and Tenant will fill out
+        the move-out inspection (section \ref{moveOutInspection}). Spaces left blank indicate items
+        in good condition and general cleanliness.
+        Any items that differ from their move-in state beyond normal wear and tear shall be
+        considered damaged and the value of damages withheld from the Security Deposit
+        (clause \ref{Security Deposit}).
+    
+        Within \highlight{7} days of the Tenant's move-out date,
+        Lessor will give Tenant a statement of
+        the basis of retaining any of the Deposit, and the remaining balance between the Lessor and Tenant
+        will be paid by a method mutually agreed upon between them within 
+        \highlight{14} days of the move-out date.}
+\clause[Possession]{Tenant may take possession of the property starting at \highlight{2:00pm}
+            on the Occupation Date. Before taking possession, Tenant must have paid the first Rent payment
+            as defined in clause \ref{Rent}, and the payment transaction must be cleared for withdrawal 
+            by the Lessor's bank.
+            In the event Tenant fails to take possession of the Property within
+            \highlight{7} days of the Occupation Date, Tenant will forfeit the 
+            Security Deposit and this Agreement will become void. If, through no fault of Lessor, Lessor
+            cannot deliver possession of the Property to Tenant on the Occupation Date, Lessor shall
+            not be liable to Tenant for damages. In this case, rent charges will accrue starting on the date
+            possession is taken, unless otherwise agreed upon in writing.}
+\clause[Authorized Occupants]{The property is being rented as a private residence only for the Tenant and
+            Additional Occupants listed in this Agreement, plus any additional occupant(s) chosen at
+            the discretion of the Tenant up to a maximum of 
+            \highlight{2} total occupants.
+        The Tenant shall not assign this Agreement,
+        sublet all or any portion of the Property, nor give accommodation to any other roomers or
+        lodgers, without the prior written consent of the Lessor. Additional occupants may be approved,
+        but this may also increase the monthly rent amount. All occupants are bound by the same terms
+        as the Tenant.}
+\clause[Furniture]{The property is being rented as a \textbf{Furnished} residence, and it is the tenant's
+            responsibility to protect the included furniture against abnormal wear and tear.
+        It is the tenant's responsibility to protect the walls and floors from damage when moving
+        furniture.}
+\clause[Maintenance]{Upon termination of this agreement, Tenant will leave the Property in as good
+        condition as it is now, reasonable wear and tear excepted. Tenant agrees not to make any
+        alterations or improvements to the Property without Lessor's prior written approval.}
+\clause[Entry/Inspection/Maintenance/Sale]{Lessor may enter the Property to inspect it, make
+        alterations or repairs, or show it to potential renters or buyers at reasonable times and, except in
+        emergencies, will give 24 hours' notice to Tenant before entering.}
+\clause[Agents]{Lessor may have others (``Agents'') act as their
+        representatives for the purposes of executing portions of this Agreement, including 
+        interacting with the Tenant, performing inspections and/or maintenance, 
+        and enforcing terms of the Agreement. Lessor will notify the Tenant and identify any such 
+        Agent before the Agent visits the Property or
+        otherwise makes contact with the Tenant. Without this notice, other parties should 
+        not be considered to have any special privileges.}
+\clause[Termination]{This is a fixed-length lease, and the Termination Date is defined by the
+            Lease End Date (definition \ref{Lease End Date}).    
+        If not signing another subsequent lease for the same property,
+        Tenant is instructed to move out by \highlight{12:00pm (noon)} on the 
+        Termination Date at the latest. Upon termination of this Agreement, 
+        any remaining financial obligations of
+        Lessor or Tenant as defined by the Agreement remain intact and payable.}
+\clause[Attorney's Fees]{If at any time it becomes necessary for Lessor or
+        Tenant to employ an attorney to enforce any terms of this Agreement, the prevailing party is
+        entitled to reasonable attorneys' fees as provided for by law. In the event of a trial, the amount
+        shall be as fixed by the Court.}
+\clause[Waiver of Subrogation]{Lessor and Tenant hereby release and waive, for the duration of
+        this Agreement and any extension or renewal thereof, their respective rights of recovery against
+        each other for any loss resulting from perils of fire and/or extended coverage as defined in
+        fire insurance policies issued to either Lessor or Tenant in effect at the time of loss,
+        provided that such waiver and resale shall apply only in the event such agreement does not
+        prejudice the insurance afforded by such policies.}
+\clause[Personal Property]{Tenant agrees that all personal property kept in or on the Property is at
+        the risk of the Tenant. Tenant is specifically advised of the availability of Renters' Insurance,
+        and is encouraged to obtain insurance for such personal property.}
+\clause[Smoke Detector]{Tenant acknowledges and Lessor certifies that the Property is equipped with
+        a smoke detector(s) as required by RCW 43.44.110.
+        
+        
+            The detector(s) will be tested during the
+            Move-In Inspection (section \ref{moveInInspection}), and any non-operational detectors will
+            be repaired or replaced.  
+        It is Tenant's responsibility to maintain the smoke detector(s) as specified by
+        the manufacturer, including replacement of batteries, if required. Failure to properly maintain the
+        smoke detector(s) can result in punishment including a fine pursuant to
+        RCW 43.44.110.}
+        
+    \section{Rules}
+        \sectionintro{
+            These rules stipulate how the Property is to be used, and as such they constitute
+            binding terms of this Agreement.
+        }
+
+        \clause[Garbage]{Tenant shall furnish garbage can(s) if not supplied by garbage
+        collection company, and place it/them where necessary for collection, or shall deliver garbage
+        to collection bins if Property is part of a multi-unit building and garbage is collected
+        centrally. Any excess garbage fees incurred because of Tenant's garbage will be payable by Tenant,
+        even if these charges are billed after the Move-Out Date.}
+\clause[Illegal Use]{Tenant shall not use the Property for any illegal purposes.}
+\clause[Repairs]{Tenant shall promptly repair, at Tenant's expense, any damaged glass or screens in doors or
+        windows, as well as any broken light bulbs or other items which by their design require periodic
+        replacement.}
+\clause[Drains]{Tenant shall use a hair trap in bathtub during showers to prevent clogging of
+        drain. Tenant shall relieve stoppage of drains and sewers at Tenant's expense unless resulting
+        from a condition existing at the Occupation Date.}
+\clause[Nails/Painting]{Tenant shall not drive any nails or screws into walls, and shall not
+        paint anything, without the prior written consent of the Lessor.}
+\clause[Noise/Nuisance]{TV, music, and other sound volumes shall be kept low enough so that no
+        noise whatsoever shall escape from the Property. Tenant shall not create or permit any other
+        nuisance on the Property.}
+\clause[Guests]{Tenant is responsible for the conduct of all guests on the Property and shall
+        ensure that guests comply with these Rules.}
+\clause[Pets]{No dogs, cats or other animals will be permitted on the Property without the prior
+        written consent of the Lessor. If lessor has given written permission for pets on the
+        property, no pet noise whatsoever shall be allowed to escape from the Property. In the case
+        of apartments/condominium units, pets shall not be allowed in the hallways, common spaces
+        or surrounding property except on a leash and accompanied by the Tenant. It is the Tenant's
+        responsibility to clean up and dispose of any pet excrement anywhere on the Property and
+        adjacent sidewalks, streets, alleys, and neighbors' properties.}
+\clause[Vehicles]{Recreation vehicles, trailers, boats and inoperable or unlicensed automobiles
+        may not be parked or stored on the Property, on or in any parking area provided for the
+        Property, or on any street or alley serving the Property. Repairs to any vehicles in these
+        locations must be completed within 24 hours of commencement.}
+\clause[Fireplace Insert/Wood Stove]{Wood stoves are prohibited, unless provided by Lessor. No
+        fireplace insert may be installed without Lessor's prior written permission. If permission is
+        given, then the installation must be inspected by the applicable city or county building
+        department, at Tenant's expense, before it is used.}
+\clause[Water Beds, Pianos and Heavy Objects]{No water beds, aquariums, pianos, organs,
+        libraries, or other unusually heavy objects are permitted in the Property without Lessor's
+        written permission. As a condition to permitting a water bed, Lessor may require Tenant to
+        provide and pay for water bed insurance.}
+        
+    \section{Signatures - Agreement of Lessor and Tenant}
+    \label{signatures}
+    \sectionintro{
+        Lessor and Tenant hereby acknowledge that they fully understand,
+        agree upon and submit to the terms of this agreement.
+    }
+    \formLine[]{First Tenant~- Signature}\nopagebreak
+\formLine[]{First Tenant~- Date}
+\formLine[]{Second Tenant~- Signature}\nopagebreak
+\formLine[]{Second Tenant~- Date}
+\formLine[\ifbool{signSection\arabic{section}}{\rlap{\raisebox{-15pt}{\smash{\includegraphics[height=50pt]{signatures/SignatureSample.pdf}}}}}{}]{Herman S. Muller~- Signature}\nopagebreak
+\formLine[\ifbool{signSection\arabic{section}}{\rlap{\raisebox{3pt}{\formatdate{10}{5}{2014}}}}{}]{Herman S. Muller~- Date}
+
+    
+        \pagebreak
+        \section{Move-In Inspection Agreement}
+            \label{moveInInspection}
+            \subsection{Critical Items}
+                \sectionintro{These important items should be identified during the move-in inspection
+                to orient the new tenants to the house. Check marks in this section indicate that the
+                Tenant knows the location of each item.}
+                \formLineCheckbox{Water Shut-Off Valve}
+                \formLineCheckbox{Electrical Panel and Main Shutoff Switch}
+                
+            
+            \subsection{Identification}
+                %
+                    \formLineCheckbox{Photo ID has been checked for First Tenant}
+                %
+                    \formLineCheckbox{Photo ID has been checked for Second Tenant}
+                
+
+            \subsection{General}
+\formLine[]{Electric Meter Reading}
+\formLine[]{List any inoperable smoke detectors}
+\formLine[]{Water Meter Reading}
+\subsection{Main Bedroom}
+\formLine[]{Any furniture owned by Lessor}
+\formLine[]{Cleanliness}
+\formLine[]{Closet Space}
+\formLine[]{Lights, Outlets}
+\formLine[]{Walls, Floors, Windows, Blinds}
+\subsection{Main Bathroom}
+\formLine[]{Cleanliness}
+\formLine[]{Counter tops}
+\formLine[]{Lights, Outlets}
+\formLine[]{Shower and Surround}
+\formLine[]{Toilet}
+\formLine[]{Walls, Floors, Windows, Blinds}
+\subsection{Kitchen}
+\formLine[]{Any furniture owned by Lessor}
+\formLine[]{Cleanliness}
+\formLine[]{Counter tops}
+\formLine[]{Cupboards, Drawers}
+\formLine[]{Lights, Outlets}
+\formLine[]{Sink and Faucet}
+\formLine[]{Walls, Floors, Windows, Blinds}
+
+    
+    
+
+    
+
+    \pagebreak
+    \section{Move-Out Inspection Agreement}
+        \label{moveOutInspection}
+        \sectionintro{This section is to be completed upon termination of the Agreement. See clause
+        \ref{Inspection Agreements} for instructions on filling out this section.}
+
+        
+            \subsection{Forwarding Address for First Tenant}
+                \formLine[None\\
+                    ]{Street Address}
+                \formLine[]{City, State, Zip}
+                \formLine[]{Phone Number}
+        
+            \subsection{Forwarding Address for Second Tenant}
+                \formLine[None\\
+                    ]{Street Address}
+                \formLine[]{City, State, Zip}
+                \formLine[]{Phone Number}
+        
+
+        \subsection{General}
+\formLine[]{Electric Meter Reading}
+\formLine[]{List any inoperable smoke detectors}
+\formLine[]{Water Meter Reading}
+\subsection{Main Bedroom}
+\formLine[]{Any furniture owned by Lessor}
+\formLine[]{Cleanliness}
+\formLine[]{Closet Space}
+\formLine[]{Lights, Outlets}
+\formLine[]{Walls, Floors, Windows, Blinds}
+\subsection{Main Bathroom}
+\formLine[]{Cleanliness}
+\formLine[]{Counter tops}
+\formLine[]{Lights, Outlets}
+\formLine[]{Shower and Surround}
+\formLine[]{Toilet}
+\formLine[]{Walls, Floors, Windows, Blinds}
+\subsection{Kitchen}
+\formLine[]{Any furniture owned by Lessor}
+\formLine[]{Cleanliness}
+\formLine[]{Counter tops}
+\formLine[]{Cupboards, Drawers}
+\formLine[]{Lights, Outlets}
+\formLine[]{Sink and Faucet}
+\formLine[]{Walls, Floors, Windows, Blinds}
+
+\end{document}

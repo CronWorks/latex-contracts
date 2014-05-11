@@ -20,10 +20,11 @@
 
 from py_base.JobOutput import JobOutput
 from py_base.PySystem import PySystem
-from latex_python.JinjaBase import Date
-from latex_contracts.LeaseContract import LeaseContract, Tenant, Occupant
+from latex_python.JinjaBase import Date, Money
+from latex_contracts.LeaseContract import LeaseContract, Lessor, Tenant, Occupant, Property, Address, Bedroom, Bathroom, Kitchen
+from latex_contracts import LeaseContractContent
 
-lease = LeaseContract()
+lease = LeaseContract(LeaseContractContent)
 
 lease.property = Property(address=Address("620 Northeast Finster Avenue",
                                           "Norfolk",
@@ -61,12 +62,14 @@ lease.tenants.append(Tenant(name="First Tenant",
 lease.tenants.append(Tenant(name="Second Tenant",
                             address=Address("321 Fake Street",
                                             "Springfield",
-                                            "MO",
+                                            "NE",
                                             "54321"),
                             phone="098 765 4321",
                             email="second.tenant@gmail.com"))
-lease.occupants.append(Occupant(name="First Occupant"))
-lease.occupants.append(Occupant(name="Second Occupant"))
+lease.occupants.append(Occupant(name="First Occupant",
+                                phone="888 767 3232"))
+lease.occupants.append(Occupant(name="Second Occupant",
+                                phone="777 848 6565"))
 
 lease.agreementDate = Date(2013, 7, 30)
 lease.leaseStartDate = Date(2013, 3, 1)
@@ -75,7 +78,16 @@ lease.leaseEndDate = Date(2014, 3, 1)
 lease.monthToMonth = False
 lease.renewal = False
 
+lease.depositAccountBankName = 'World Trust Federal Bank'
+lease.depositAccountBankCityState = 'Springfield, NA'
+
 lease.signSections = [1, 2, 3, 4]
+
+lease.addClause("Terms of Lease Agreement", "Primary Tenant", '''
+    TEST: B0rKD the first clause!
+    ALSO: Please confirm that the next clause is NOT "Occupation Type"!!!
+''')
+lease.removeClause("Terms of Lease Agreement", "Occupation Type")
 
 system = PySystem(JobOutput())
 filename = __file__ + '.pdf'

@@ -302,11 +302,6 @@ def addContent(contract):
         contract.addClause(section, 'Snow', '''
             In the event of snow, Tenant shall remove snow from any abutting sidewalks.''')
             
-#     contract.addClause(section, 'Freezing', '''
-#         Tenant shall protect the plumbing from freezing. As a minimum, Tenant shall
-#         leave the heat on low during cold weather, and operate various plumbing fixtures occasionally to
-#         keep water flowing.''')
-#     
     contract.addClause(section, 'Drains', '''
         Tenant shall use a hair trap in bathtub during showers to prevent clogging of
         drain. Tenant shall relieve stoppage of drains and sewers at Tenant's expense unless resulting

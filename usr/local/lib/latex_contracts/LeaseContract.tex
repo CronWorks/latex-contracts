@@ -70,8 +70,6 @@
         \pagebreak
         \section{Move-In Inspection Agreement}
             \label{moveInInspection}
-            (((contract.getInspectionFormContent('moveIn'))))
-
             \subsection{Critical Items}
                 \sectionintro{These important items should be identified during the move-in inspection
                 to orient the new tenants to the house. Check marks in this section indicate that the
@@ -86,6 +84,9 @@
                 [[[ for tenant in contract.tenants ]]]%
                     \formLineCheckbox{Photo ID has been checked for ((( tenant|escapeTex )))}
                 [[[ endfor ]]]
+
+            (((contract.getInspectionFormContent('moveIn'))))
+
     [[[ endif ]]]
     
 
@@ -105,7 +106,6 @@
         \label{moveOutInspection}
         \sectionintro{This section is to be completed upon termination of the Agreement. See clause
         \ref{Inspection Agreements} for instructions on filling out this section.}
-        (((contract.getInspectionFormContent('moveOut'))))
 
         [[[ for tenant in contract.tenants: ]]]
             \subsection{Forwarding Address for ((( tenant|escapeTex )))}
@@ -113,4 +113,7 @@
                 \formLine[((( tenant.forwardingCityStateZip|escapeTex )))]{City, State, Zip}
                 \formLine[((( tenant.forwardingPhoneNumber|escapeTex )))]{Phone Number}
         [[[ endfor ]]]
+
+        (((contract.getInspectionFormContent('moveOut'))))
+
 \end{document}

@@ -23,16 +23,16 @@ from os.path import dirname
 from collections import OrderedDict
 
 class Contract(JinjaTexDocument):
-    def __init__(self, searchPath=None, signatureFilePath=None, **kwargs):
+    def __init__(self, templateModule=None, searchPath=None, signatureFilePath=None, **kwargs):
         self.title = 'Contract Agreement'
         self.subtitle = "This document is a Contractual Agreement (``Agreement'') between the parties listed."
         self.agreementDate = Date()
         self.showInitialsBox = True
         self.signSections = []
-        self.clauses = OrderedDict() # format: {'sectionName': [clause list], ...}
-    
-        super(Contract, self).__init__(searchPath or dirname(__file__), **kwargs)
-        
+        self.clauses = OrderedDict()  # format: {'sectionName': [clause list], ...}
+
+        super(Contract, self).__init__(templateModule, searchPath or dirname(__file__), **kwargs)
+
         self.signatureFilePath = signatureFilePath or dirname(__file__)
 
     def generate(self, outputFilename, system, variables={}):
@@ -71,7 +71,11 @@ class Contract(JinjaTexDocument):
             # file doesn't exist
             pass
 
-    def addClause(self, sectionName, labelOrClauseObject, textOrNone = None):
+    def addClause(self, sectionName, labelOrClauseObject, textOrNone=None):
+        # apply the template if it hasn't been applied already
+        # (needs to be applied before any custom clauses, so that they override it.)
+        self.applyTemplateContentIfNecessary()
+
         if isinstance(labelOrClauseObject, Clause):
             clause = labelOrClauseObject
         else:
@@ -79,6 +83,16 @@ class Contract(JinjaTexDocument):
         if not sectionName in self.clauses:
             self.clauses[sectionName] = OrderedDict()
         self.clauses[sectionName][clause.label] = clause
+
+    def removeClause(self, sectionName, label):
+        # apply the template if it hasn't been applied already
+        # (needs to be applied before any custom clauses, so that they override it.)
+        self.applyTemplateContentIfNecessary()
+
+        try:
+            del(self.clauses[sectionName][label])
+        except:
+            pass
 
     def getClauses(self, sectionName):
         try:
@@ -160,14 +174,14 @@ class Definition(JsonSerializable):
 
 class Address(JsonSerializable):
     def __init__(self, address=None, city=None, state=None, zip=None, **kwargs):
-        kwargs['address']=address
-        kwargs['city']=city
+        kwargs['address'] = address
+        kwargs['city'] = city
         if state:
             kwargs['state'] = state
         if zip:
             kwargs['zip'] = zip
         super(Address, self).__init__(**kwargs)
-        
+
     def getFullAddressTex(self):
         result = '''%s\\\\
                     %s''' % (escapeTex(getattr(self, 'address', '')),
@@ -211,20 +225,3 @@ class Person(JsonSerializable):
 
     def __str__(self, *args, **kwargs):
         return self.name
-
-def buildContract(typeOrInstance, **kwargs):
-    if isinstance(typeOrInstance, Contract):
-        contract = typeOrInstance
-    else:
-        contract = typeOrInstance(**kwargs)
-    
-    # shorthand state & functions for building clauses/definitions    
-    currentSection = None
-    def section(label):
-        currentSection = label
-    def definition(term, meaning):
-        contract.addDefinition(currentSection, term, meaning)
-    def clause(heading, text):
-        contract.addClause(currentSection, heading, text)
-    
-    return (contract, section, definition, clause)
