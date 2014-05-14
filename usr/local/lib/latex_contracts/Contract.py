@@ -45,13 +45,14 @@ class Contract(JinjaTexDocument):
             self.symlink('%s/signatures' % self.signatureFilePath, '%s/signatures' % texFileDir)
 
         errors = super(Contract, self).generate(outputFilename, system, variables)
-        if errors[0] or errors[1]:
-            raise Exception("Errors: %s, Warnings: %s" % (errors[0], errors[1]))
 
         # remove softlinks to the signature files if necessary
         if self.needToSymlinkSignatureDirs(texFileDir):
             self.remove(texFileDir + '/signatures')
             self.remove(texFileDir + '/initials')
+
+        if errors[0] or errors[1]:
+            raise Exception("Errors: %s, Warnings: %s" % (errors[0], errors[1]))
 
 
     def needToSymlinkSignatureDirs(self, texFileDir):
