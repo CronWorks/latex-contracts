@@ -67,7 +67,7 @@
 % For form lines: \clauseWidth = \formLabelWidth + {remainder = underline}
 \newcommand{\clauseNumberWidth}{18pt}
 \newcommand{\clauseNumberPadding}{5pt}
-\newcommand{\formLineVerticalPadding}{10pt}% mostly for multi-line formlines
+\newcommand{\formLineVerticalPadding}{8pt}% mostly for multi-line formlines
 
 \newlength{\clauseWidth}
 \setlength{\clauseWidth}{\textwidth}
@@ -139,7 +139,7 @@
 \setlength{\formLabelWidth}{0.3\clauseWidth}
 
 \newlength{\formLabelSpacing}% width between label and _______
-\setlength{\formLabelSpacing}{0.05\clauseWidth}
+\setlength{\formLabelSpacing}{0.03\clauseWidth}
 
 \newlength{\formUnderlineWidth}% width of the _______
 \setlength{\formUnderlineWidth}{\clauseWidth}

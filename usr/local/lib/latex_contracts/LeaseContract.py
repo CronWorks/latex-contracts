@@ -195,8 +195,12 @@ class LeaseContract(Contract):
 
         self.moveInTime = '2:00pm'
         self.moveOutTime = '12:00pm (noon)'
-        self.administrativeGracePeriodDays = 7
-        self.gracePeriodDays = 5
+        self.depositRefundGracePeriodDays = 14
+        self.initialMaintenanceGracePeriodDays = 7
+        self.paymentGracePeriodDays = 5
+        self.possessionGracePeriodDays = 7
+        self.moveInInspectionGracePeriodDays = 2
+        self.securityDepositGracePeriodDays = 5
         self.dailyLatePenalty = Money(25)
         self.latePenaltyLimitPercent = Percent(10)
         self.bouncedCheckPenalty = Money(50)
@@ -222,25 +226,17 @@ class LeaseContract(Contract):
         return self.getPersonDefinitions('Tenant', self.tenants[i], i + 1)
 
     def getOccupantDefinitions(self, i):
-        # abbreviated version
-        person = self.occupants[i]
-        label = 'Occupant'
-        result = '''
-            \definition{%s %d}{%s}
-            \definition{%s %d telephone number}{%s}
-        ''' % (label, i + 1, person.name,
-               label, i + 1, getattr(person, 'phone', ''))
-        return result
+        return self.getPersonDefinitions('Occupant', self.occupants[i], i + 1)
 
     def getPersonDefinitions(self, label, person, i):
-        result = '''
-            \definition{%s %d}{%s}
-            \definition{%s %d current or previous address}{%s}
-            \definition{%s %d telephone number}{%s}
-        ''' % (label, i, person.name,
-               label, i, person.address.getFullAddressTex(),
-               label, i, getattr(person, 'phone', ''))
-        return result
+        result = ['\\definition{%s %d}{%s}'%(label, i, person.name)]
+        if hasattr(person, 'address'):
+            result.append('\\definition{%s %d address}{%s}' % (label, i, person.address.getFullAddressTex()))
+        if hasattr(person, 'phone'):
+            result.append('\\definition{%s %d telephone number}{%s}' % (label, i, person.phone))
+        if hasattr(person, 'email'):
+            result.append('\\definition{%s %d email address}{%s}' % (label, i, person.email))
+        return '\n'.join(result)
 
     def getNumberOfFooterRows(self):
         numberOfInitialsRows = max(len(self.lessors), len(self.tenants))

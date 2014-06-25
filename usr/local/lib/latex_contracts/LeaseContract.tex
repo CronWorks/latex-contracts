@@ -50,13 +50,13 @@
     \section{Terms of Lease Agreement}
         ((( contract.getClauses('Terms of Lease Agreement') )))
         
-    \section{Rules}
+    \section{Policies and Expectations}
         \sectionintro{
             These rules stipulate how the Property is to be used, and as such they constitute
             binding terms of this Agreement.
         }
 
-        ((( contract.getClauses('Rules') )))
+        ((( contract.getClauses('Policies and Expectations') )))
         
     \section{Signatures - Agreement of Lessor and Tenant}
     \label{signatures}
@@ -86,6 +86,9 @@
                 [[[ endfor ]]]
 
             (((contract.getInspectionFormContent('moveIn'))))
+            
+            \subsection{Signatures - Agreement of Move-In Condition}
+                (((contract.getSignatureFormlines())))
 
     [[[ endif ]]]
     
@@ -115,5 +118,8 @@
         [[[ endfor ]]]
 
         (((contract.getInspectionFormContent('moveOut'))))
+            
+        \subsection{Signatures - Agreement of Move-Out Condition}
+            (((contract.getSignatureFormlines())))
 
 \end{document}
