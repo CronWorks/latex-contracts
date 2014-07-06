@@ -53,6 +53,7 @@ PROPERTY_ELEMENTS = {'appliances': 'Appliances',
                      'walls': 'Walls, Floors, Windows, Blinds',
                      'washer': 'Washer/Dryer',
                      'waterMeter': 'Water Meter Reading',
+                     'weeding': 'Weeding and Mowing',
                      }
 
 class SubjectToInspection(JsonSerializable):
@@ -75,7 +76,7 @@ class SubjectToInspection(JsonSerializable):
             if itemId in ignoreList:
                 continue
             label = PROPERTY_ELEMENTS[itemId]
-            condition = getattr(conditionDict, itemId, '')
+            condition = conditionDict.get(itemId, '')
             resultDict[label] = condition
         return [(label, resultDict[label]) for label in sorted(resultDict.keys())]
 
@@ -153,6 +154,12 @@ class Basement(Room):
     def __init__(self, **kwargs):
         super(Basement, self).__init__(**kwargs)
         self._inspectionItems = ['general']
+
+class YardAndLawn(Room):
+    def __init__(self, **kwargs):
+        super(YardAndLawn, self).__init__(**kwargs)
+        self._inspectionItems = ['cleanliness',
+                                 'weeding']
 
 class Property(SubjectToInspection):
     def __init__(self, **kwargs):

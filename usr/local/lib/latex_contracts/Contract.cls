@@ -136,7 +136,7 @@
 \newcommand{\highlight}[1]{\textbf{{#1}}}
 
 \newlength{\formLabelWidth}% width of the label of the form line
-\setlength{\formLabelWidth}{0.3\clauseWidth}
+\setlength{\formLabelWidth}{0.35\clauseWidth}
 
 \newlength{\formLabelSpacing}% width between label and _______
 \setlength{\formLabelSpacing}{0.03\clauseWidth}
