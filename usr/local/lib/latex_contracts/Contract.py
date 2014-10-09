@@ -115,7 +115,7 @@ class Contract(JinjaTexDocument):
             \\vspace{7pt}\\small {%s} %s
             \\makebox[\\initialsSpaceWidth]{\\hrulefill}
             \\small Date %s
-            \\makebox[\initialsSpaceWidth]{\hrulefill}%%
+            \\makebox[\\initialsSpaceWidth]{\\hrulefill}%%
         ''' % (escapeTex(person), signatureContent, dateContent)
         return result
 
