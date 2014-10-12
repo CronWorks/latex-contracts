@@ -182,11 +182,14 @@ def addContent(contract):
             The Tenant is occupying the Property as a roommate, and no
             additional occupants will be allowed without explicit permission from the Lessor.'''
     else:
-        occupantsText = '''
-            The property is being rented as a private residence only for the Tenant and
-            Additional Occupants listed in this Agreement, plus any additional occupant(s) chosen at
-            the discretion of the Tenant up to a maximum of 
-            \\highlight{%d} total occupants.''' % contract.property.occupantLimit
+        if contract.property.occupantLimit > 1: # this is slightly different than contract.multipleTenants()
+            occupantsText = '''
+                The property is being rented as a private residence only for the Tenant and
+                Additional Occupants listed in this Agreement, plus any additional occupant(s) chosen at
+                the discretion of the Tenant up to a maximum of 
+                \\highlight{%d} total occupants.''' % contract.property.occupantLimit
+        else:
+            occupantsText = ''
     contract.addClause(section, 'Authorized Occupants', occupantsText + '''
         The Tenant shall not assign this Agreement,
         sublet all or any portion of the Property, nor give accommodation to any other roomers or

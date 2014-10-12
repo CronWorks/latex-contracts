@@ -19,24 +19,28 @@
 \begin{document}
     \section{Definitions}
         \definition{Lease Agreement Date}{((( contract.agreementDate )))}
-        [[[for i in range(contract.tenants.__len__())]]]
+        [[[ for i in range(contract.tenants.__len__()) ]]]
             ((( contract.getTenantDefinitions(i) )))
-        [[[endfor]]]
-        \definition{Tenant}{All tenants signing this Agreement are collectively referred to as
-        ``Tenant''.}
-        [[[if contract.occupants]]]
-            [[[for i in range(contract.occupants.__len__())]]]
+        [[[ endfor ]]]
+        [[[ if contract.tenants.__len__() > 1 ]]]
+	        \definition{Tenant}{All tenants signing this Agreement are collectively referred to as
+	        ``Tenant''.}
+        [[[ endif ]]]
+        [[[ if contract.occupants ]]]
+            [[[ for i in range(contract.occupants.__len__()) ]]]
                 ((( contract.getOccupantDefinitions(i) )))
-            [[[endfor]]]
+            [[[ endfor ]]]
             \definition{Occupants}{Tenant and Additional Occupants named on this lease, as well as
             any additional authorized occupants (if any) under clause \ref{Authorized Occupants}, are referred to as
             ``Occupants''.} 
-        [[[endif]]]
-        [[[for i in range(contract.lessors.__len__())]]]
+        [[[ endif ]]]
+        [[[ for i in range(contract.lessors.__len__()) ]]]
             ((( contract.getLessorDefinitions(i) )))
-        [[[endfor]]]
-        \definition{Lessor}{All lessors named on this lease are collectively referred to as
-        ``Lessor''.}
+        [[[ endfor ]]]
+        [[[ if contract.tenants.__len__() > 1 ]]]
+	        \definition{Lessor}{All lessors named on this lease are collectively referred to as
+	        ``Lessor''.}
+        [[[ endif ]]]
         \definition[Property]{Property street address}{((( contract.property.address.getFullAddressTex() )))}
         \definition{Property county}{((( contract.property.county|escapeTex )))}
         \definition[Occupation Date]{Lease Start Date}{((( contract.leaseStartDate )))}

@@ -183,7 +183,6 @@ class Property(SubjectToInspection):
         # add gas/oil on a per-property basis
         self._inspectionItems = ['smokeDetectors',
                                  'electricMeter',
-                                 'waterMeter',
                                  ]
 
 
@@ -227,22 +226,34 @@ class LeaseContract(Contract):
         return len(self.tenants) + len(self.occupants) > 1
 
     def getLessorDefinitions(self, i):
-        return self.getPersonDefinitions('Lessor', self.lessors[i], i + 1)
+        label = 'Lessor'
+        if len(self.lessors) > 1:
+            # if we need ot distinguish multiple people, then say "Person 1" instead of "Person"
+            label = '%s %d' % (label, i + 1)
+        return self.getPersonDefinitions(label, self.lessors[i])
 
     def getTenantDefinitions(self, i):
-        return self.getPersonDefinitions('Tenant', self.tenants[i], i + 1)
+        label = 'Tenant'
+        if len(self.tenants) > 1:
+            # if we need ot distinguish multiple people, then say "Person 1" instead of "Person"
+            label = '%s %d' % (label, i + 1)
+        return self.getPersonDefinitions(label, self.tenants[i])
 
     def getOccupantDefinitions(self, i):
-        return self.getPersonDefinitions('Occupant', self.occupants[i], i + 1)
+        label = 'Occupant'
+        if len(self.occupants) > 1:
+            # if we need ot distinguish multiple people, then say "Person 1" instead of "Person"
+            label = '%s %d' % (label, i + 1)
+        return self.getPersonDefinitions(label, self.occupants[i])
 
-    def getPersonDefinitions(self, label, person, i):
-        result = ['\\definition{%s %d}{%s}'%(label, i, person.name)]
+    def getPersonDefinitions(self, label, person):
+        result = ['\\definition{%s}{%s}'%(label, person.name)]
         if hasattr(person, 'address'):
-            result.append('\\definition{%s %d address}{%s}' % (label, i, person.address.getFullAddressTex()))
+            result.append('\\definition{%s address}{%s}' % (label, person.address.getFullAddressTex()))
         if hasattr(person, 'phone'):
-            result.append('\\definition{%s %d telephone number}{%s}' % (label, i, person.phone))
+            result.append('\\definition{%s telephone number}{%s}' % (label, person.phone))
         if hasattr(person, 'email'):
-            result.append('\\definition{%s %d email address}{%s}' % (label, i, person.email))
+            result.append('\\definition{%s email address}{%s}' % (label, person.email))
         return '\n'.join(result)
 
     def getNumberOfFooterRows(self):
